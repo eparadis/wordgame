@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public class WordGame
 {
@@ -8,6 +9,15 @@ public class WordGame
 
 		Console.WriteLine( "distance from cat to dog: " + distance("cat", "dog"));
 		Console.WriteLine( "distance from cat to car: " + distance("cat", "car"));
+
+		List<string> setA = new List<string>();
+		setA.Add("cat");
+		setA.Add("car");
+		setA.Add("bar");
+		Console.WriteLine( "game 'cat car bar' valid? " + check_game(setA));
+		setA.Add("dog");
+		Console.WriteLine( "game 'cat car bar dog' valid? " + check_game(setA));
+
 
 		return 0;
 	}
@@ -26,5 +36,23 @@ public class WordGame
 		}
 
 		return count;
+	}
+
+	// given a list of words, make sure the distance between each word is only one
+	static bool check_game( List<string> words )
+	{
+		bool valid = true;
+		string prev = words[0];
+		for(int i = 1; i<words.Count; i++)
+		{
+			if(distance(prev, words[i]) != 1)
+			{
+				valid = false;
+				break;
+			}
+			prev = words[i];
+		}
+
+		return valid;
 	}
 }
