@@ -25,6 +25,15 @@ public class WordGame
 		Console.WriteLine( "game 'cat car bar' valid? " + check_game(setA));
 		setA.Add("dog");
 		Console.WriteLine( "game 'cat car bar dog' valid? " + check_game(setA));
+	
+		setA.Clear();
+		setA = find_words( "cat", 1);
+		Console.WriteLine( "the words distance one from 'cat' are:" );
+		foreach( string w in setA)
+		{
+			Console.Write( " " + w );
+		}
+		Console.WriteLine("\nend of list");
 	}
 
 
@@ -67,4 +76,22 @@ public class WordGame
 
 		return valid;
 	}
+
+	// find all the words with the given distance from a given word, besides the word
+	static List<string> find_words( string word, int dist)
+	{
+		List<string> valid_words = new List<string>();
+
+		string line;
+		System.IO.StreamReader file =  new System.IO.StreamReader("/usr/share/dict/words");
+		while( (line = file.ReadLine()) != null)
+		{
+			if( distance( word, line) == dist)
+				valid_words.Add( line);
+		}
+
+		return valid_words;
+	}
+
+
 }
