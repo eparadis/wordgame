@@ -43,6 +43,10 @@ public class WordGame
 		if(A.Length != B.Length)
 			return -1;	// we do not consider unequal length words
 
+		// distance should be case insensitive
+		A = A.ToLower();
+		B = B.ToLower();
+
 		int count = 0;
 		for( int i = 0; i<A.Length; i++)
 		{
