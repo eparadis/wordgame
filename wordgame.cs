@@ -34,6 +34,15 @@ public class WordGame
 			Console.Write( " " + w );
 		}
 		Console.WriteLine("\nend of list");
+
+		setA.Clear();
+		setA = create_game( "cat", 5);
+		Console.WriteLine( "game starting with 'cat':" );
+		foreach( string w in setA)
+		{
+			Console.Write( " " + w );
+		}
+		Console.WriteLine("\nend of list");
 	}
 
 
@@ -97,5 +106,37 @@ public class WordGame
 		return valid_words;
 	}
 
+	// make a 'game', a list of unduplicated words that are each distance one from the previous
+	// use the given starting word and find the given number of words
+	static List<string> create_game( string start, int length)
+	{
+		List<string> ret = new List<string>();
 
+		if( length == 0 )
+			return ret;
+
+		// the game starts with the first word
+		ret.Add(start);
+
+		if( length == 1 )
+			return ret;		// return just the single word
+
+		// this is grossly inefficient
+		for( int i = 1; i<length; i++)
+		{
+			List<string> possible = find_words(ret[i-1], 1);	// get a list of possible words
+			string next_word = possible.Find(
+				delegate( string s)
+				{
+					return s != ret[i-1];
+				});
+			
+			if( next_word != null )
+				ret.Add(next_word);
+			else
+				break;
+		}
+
+		return ret;
+	}
 }
