@@ -28,17 +28,18 @@ public class WordGame
 	
 		setA.Clear();
 		setA = find_words( "cat", 1);
-		Console.WriteLine( "the words distance one from 'cat' are:" );
-		foreach( string w in setA)
-		{
-			Console.Write( " " + w );
-		}
-		Console.WriteLine("\nend of list");
+		write_list( setA, "the words distance one from 'cat' are:" );
 
 		setA.Clear();
 		setA = create_game( "cat", 5);
-		Console.WriteLine( "game starting with 'cat':" );
-		foreach( string w in setA)
+		write_list( setA,  "game starting with 'cat':" );
+	}
+
+	// convenience function to write out a list of words nicely
+	static void write_list( List<string> words, string label )
+	{
+		Console.WriteLine( label );
+		foreach( string w in words)
 		{
 			Console.Write( " " + w );
 		}
