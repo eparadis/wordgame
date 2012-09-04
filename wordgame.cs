@@ -26,13 +26,10 @@ public class WordGame
 		setA.Add("dog");
 		Console.WriteLine( "game 'cat car bar dog' valid? " + check_game(setA));
 	
-		setA.Clear();
-		setA = find_words( "cat", 1);
-		write_list( setA, "the words distance one from 'cat' are:" );
-
-		setA.Clear();
-		setA = create_game( "cat", 5);
-		write_list( setA,  "game starting with 'cat':" );
+		write_list( find_words( "cat",1) , "the words distance one from 'cat' are:" );
+		write_list( create_game("cat", 10),  "game starting with 'cat':" );
+		write_list( create_game("foot", 10), "game starting with 'foot':" );
+		write_list( create_game("rabbit", 10), "game starting with 'rabbit':" );
 	}
 
 	// convenience function to write out a list of words nicely
@@ -43,7 +40,7 @@ public class WordGame
 		{
 			Console.Write( " " + w );
 		}
-		Console.WriteLine("\nend of list");
+		Console.WriteLine("\nend of list (" + words.Count + " elements)" );
 	}
 
 
@@ -126,16 +123,21 @@ public class WordGame
 		for( int i = 1; i<length; i++)
 		{
 			List<string> possible = find_words(ret[i-1], 1);	// get a list of possible words
-			string next_word = possible.Find(
-				delegate( string s)
-				{
-					return s != ret[i-1];
-				});
 			
+			string next_word = null;
+			foreach( string r in ret )
+			{
+				if( possible.Contains(r))
+					possible.Remove(r);		// remove previously used words
+			}
+
+			if( possible.Count > 0 )
+				next_word = possible[0];
+		
 			if( next_word != null )
 				ret.Add(next_word);
 			else
-				break;
+				break;	// stop trying to add words if we can't find any more
 		}
 
 		return ret;
