@@ -3,9 +3,15 @@ using System.Collections.Generic;
 
 public class WordGame
 {
+	static string wordlist_filename;
+
 	static public int Main ( string[] args)
 	{
 		Console.WriteLine( "wordgame!");
+		if( args.Length > 0)
+			wordlist_filename = args[0];
+		else
+			wordlist_filename = "/usr/share/dict/words";
 
 		do_tests();	// little tests of the utility functions
 
@@ -27,9 +33,10 @@ public class WordGame
 		Console.WriteLine( "game 'cat car bar dog' valid? " + check_game(setA));
 	
 		write_list( find_words( "cat",1) , "the words distance one from 'cat' are:" );
-		write_list( create_game("cat", 10),  "game starting with 'cat':" );
+		write_list( create_game("cat", 100),  "game starting with 'cat':" );
 		write_list( create_game("foot", 10), "game starting with 'foot':" );
 		write_list( create_game("rabbit", 10), "game starting with 'rabbit':" );
+		write_list( create_game("methods", 10), "game starting with 'methods':" );
 	}
 
 	// convenience function to write out a list of words nicely
@@ -94,7 +101,8 @@ public class WordGame
 		List<string> valid_words = new List<string>();
 
 		string line;
-		System.IO.StreamReader file =  new System.IO.StreamReader("/usr/share/dict/words");
+		//System.IO.StreamReader file =  new System.IO.StreamReader("/usr/share/dict/words");
+		System.IO.StreamReader file =  new System.IO.StreamReader(wordlist_filename);
 		while( (line = file.ReadLine()) != null)
 		{
 			if( distance( word, line) == dist)
